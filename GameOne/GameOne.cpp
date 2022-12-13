@@ -5,7 +5,7 @@
 using namespace std;
 
 const char* wordList[4]
-= { "blue", "red", "orange", "yellow" };
+= { "blue", "red", "orange", "sign"};
 
 int attempts = 0;
 int maxAttempts = 5;
@@ -14,7 +14,7 @@ int guessed = 0;
 int toBeGuess;
 
 
-char* guessedSymbols[20] ;
+char guessedSymbols[20] ;
 
 void visualization(int a) {
     if (a == 0) {
@@ -223,6 +223,9 @@ char getInput() {
     input = tolower(input);
     return input;
 }
+
+
+
 int main()
 {
 
@@ -248,9 +251,14 @@ int main()
         else if (guessed > 0) {
             for (size_t i = 0; i < symbols; i++)
             {
-
-                
+                for (size_t j = 0; j < 10; j++)
+                {
+                    if (word[i] == guessedSymbols[j]) {
+                        std::cout << guessedSymbols[j];
+                    }
+                }
                 std::cout << "_ ";
+                
             }
         }
 
@@ -268,7 +276,13 @@ int main()
         if (word.find(input) != string::npos)
         {
             
-               
+            for (int i = 0; i < 10; i++)
+            {
+                if (guessedSymbols[i] == '\0') {
+                    guessedSymbols[i] = input;
+                    i = 10;
+                }
+            }
             guessed++;
 
         }
