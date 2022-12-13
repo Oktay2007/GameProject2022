@@ -237,7 +237,7 @@ char getInput() {
 void addToSymbolList(char input, int symbols) {
     for (int i = 0; i < symbols; i++)
     {
-        if (guessedSymbols[i] == '\0') {
+        if (guessedSymbols[i] == '\0') { // check if symbol space is free
             guessedSymbols[i] = input;
             i = 10;
             guessed++;
@@ -336,9 +336,12 @@ int main()
         
     }
 
-    visualization(attempts);
-    std::cout << "\n You lost";
 
+    system("cls"); // clear the console
+    visualization(attempts); // using the function visualization to graphicaly render a hangman
+    std::cout << "The word was : " << word << endl; // write what was the word
+    std::cout << "\nYou lost"; // write you lost text
+    return 0; // just end the program
 
 
 }
