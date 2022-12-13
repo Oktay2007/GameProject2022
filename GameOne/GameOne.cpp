@@ -14,7 +14,7 @@ int guessed = 0;
 int toBeGuess;
 
 
-char guessedSymbols[50] ;
+char* guessedSymbols[20] ;
 
 void visualization(int a) {
     if (a == 0) {
