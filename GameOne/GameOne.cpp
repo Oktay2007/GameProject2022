@@ -1,21 +1,29 @@
+//declare what we are using
 #include <iostream>
 #include <ctime>
 #include <cstring>
 #include <cstdlib>
-using namespace std;
+using namespace std; 
 
-const char* wordList[4]
+
+//Declare variables
+
+
+const char* wordList[4] // Words that will be used in the game
 = { "blue", "red", "orange", "sign"};
 
-int attempts = 0;
-int maxAttempts = 5;
+int attempts = 0; // current attempts
+int maxAttempts = 5; // maximum attempts
 
-int guessed = 0;
-int toBeGuess;
+int guessed = 0; // how much of the symbols are guessed
+int toBeGuess; // how much is left to be guessed
 
 
-char guessedSymbols[20] ;
+char guessedSymbols[20] ;  // all guessed symbols
 
+
+
+// Visualization function of the hangman 
 void visualization(int a) {
     if (a == 0) {
         std::cout << R"(
@@ -210,13 +218,15 @@ ___________.._______
 }
 
 
+
+// Generate the random word
 string generateRandomWord() {
-    srand(time(0));
-    int random = (rand() % 4);
-    return wordList[random];
+    srand(time(0)); // using srand to generate random seed using time
+    int random = (rand() % 4); // using rand to pick random number till 4 - 1 ( that is the size of the word list )
+    return wordList[random]; // return the word
 }
 
-
+// function to get the input of the player
 char getInput() {
     char input;
     cin >> input;
@@ -224,66 +234,86 @@ char getInput() {
     return input;
 }
 
-
+void addToSymbolList(char input, int symbols) {
+    for (int i = 0; i < symbols; i++)
+    {
+        if (guessedSymbols[i] == '\0') {
+            guessedSymbols[i] = input;
+            i = 10;
+            guessed++;
+        }
+    }
+}
 
 int main()
 {
 
 
-    string word = generateRandomWord();
-    int symbols = word.length();
-    char input;
-    toBeGuess = symbols;
+    string word = generateRandomWord(); // using the generateRandomWord function to pick the word for this session
+    int symbols = word.length(); // creating intiger symbols that represend the length of the word
+    char input; // create input variable
+    toBeGuess = symbols; // set the symbols to be guessed to the symbols
+    bool type = true; // a temporary bool
 
     for (size_t i = 0; i < maxAttempts + 2; i++)
     {
-        system("cls");
+        system("cls"); // clear the console at the start every time
 
 
-        visualization(attempts);
+        visualization(attempts); // using the function visualization to graphicaly render a hangman
         
-        if (guessed == 0) {
+        if (guessed == 0) { // if we didn't guess any symbols of the word run bellow
             for (size_t i = 0; i < symbols; i++)
             {
-                std::cout << "_ ";
+                std::cout << "_ "; // type _ for every symbol
             }
         }
-        else if (guessed > 0) {
+        else if (guessed > 0) { // if we guessed any symbol
             for (size_t i = 0; i < symbols; i++)
             {
                 for (size_t j = 0; j < 10; j++)
                 {
-                    if (word[i] == guessedSymbols[j]) {
-                        std::cout << guessedSymbols[j];
+                    if (word[i] == guessedSymbols[j]) { // if word contains any of the guessed symbols
+                        std::cout << guessedSymbols[j]; // instead of _ type the symbol
+                        type = false; // we are using type to make sure it doesn't cout the _ again
                     }
                 }
-                std::cout << "_ ";
+                if (type == true) { // type the rest
+                    std::cout << "_ ";
+                    
+                }
+                type = true;
                 
             }
         }
 
-        input = getInput();
+        input = getInput(); // use the function getInput to get the input from the player
 
 
         
-        std::cout << endl << endl;
+        std::cout << endl << endl; // just add 2 more blank lines
 
 
 
 
+       
 
-
-        if (word.find(input) != string::npos)
+        if (word.find(input) != string::npos) // of we find a symbol that exists in the word
         {
-            
-            for (int i = 0; i < 10; i++)
+            for (int k = 0; k < symbols; k++)
             {
-                if (guessedSymbols[i] == '\0') {
-                    guessedSymbols[i] = input;
-                    i = 10;
+                if  (input == guessedSymbols[k]) { // if we guessed typed that symbol
+                    attempts++;
+                    k = symbols + 1;
+                }
+                else { // else if we didn't already guessed it
+                    addToSymbolList(input, symbols); //add to the symbols list
+                    k = symbols + 1;
                 }
             }
-            guessed++;
+            
+
+            
 
         }
         else {
@@ -295,8 +325,13 @@ int main()
 
         if (guessed >= toBeGuess)
         {
-            std::cout << "You Won";
-            return 0;
+            system("cls"); // clear the console
+
+
+            visualization(attempts); // using the function visualization to graphicaly render a hangman
+            std::cout << word << endl; // write the whole word
+            std::cout << "You Won"; // write you won text
+            return 0; // just end the program
         }
         
     }
