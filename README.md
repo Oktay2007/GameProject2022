@@ -21,6 +21,6 @@
 
 A game about hanging a game
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
