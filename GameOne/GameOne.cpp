@@ -9,8 +9,8 @@ using namespace std;
 //Declare variables
 
 
-const char* wordList[4] // Words that will be used in the game
-= { "blue", "red", "orange", "sign"};
+const char* wordList[10] // Words that will be used in the game
+= { "blue", "red", "orange", "sign", "phone", "game", "background", "algorithms", "education", "binoculars"};
 
 int attempts = 0; // current attempts
 int maxAttempts = 5; // maximum attempts
@@ -181,7 +181,7 @@ ___________.._______
 | |          ||
 | |          || 
 | |         / | 
-""""""""""|_`-'     |"""|
+""""""""""|_`-'-----|"""|
 |"|"""""""\ \       '"|"|
 | |        \ \        | |
 : :         \ \       : :  
@@ -222,7 +222,7 @@ ___________.._______
 // Generate the random word
 string generateRandomWord() {
     srand(time(0)); // using srand to generate random seed using time
-    int random = (rand() % 4); // using rand to pick random number till 4 - 1 ( that is the size of the word list )
+    int random = (rand() % 10); // using rand to pick random number till 10 - 1 ( that is the size of the word list )
     return wordList[random]; // return the word
 }
 
